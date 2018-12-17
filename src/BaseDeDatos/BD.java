@@ -3,6 +3,7 @@ package BaseDeDatos;
 import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 import Datos.Producto;
 import Datos.Usuario;
@@ -693,5 +695,21 @@ public class BD {
 			e.printStackTrace();
 		}
 		return desc;
+	}
+	
+	public static void btnGuardar(String imagen, String nick) {
+		String query = "UPDATE USUARIO SET Imagen ='"+imagen+"' WHERE nick='"+nick+"'";
+		PreparedStatement pst;
+		try {
+
+			pst = con.prepareStatement(query);
+			if(pst.executeUpdate()>0) {
+				JOptionPane.showMessageDialog(null, "REGISTRADO CORRECTAMENTE");
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
