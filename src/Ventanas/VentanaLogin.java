@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.xml.validation.SchemaFactoryConfigurationError;
 
 import BaseDeDatos.BD;
+import Datos.Compra;
 import Datos.Usuario;
 import VentanasAdministrador.VentanaAdmin;
 import javazoom.jl.decoder.JavaLayerException;
@@ -27,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -64,6 +66,9 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 	public static BD bd;
 	private static Connection con;
+	
+	//Público y estático para poder acceder a él desde cualquier lado
+	public static ArrayList<Compra> carrito;
 
 	/**
 	 * Launch the application.
@@ -105,6 +110,8 @@ public class VentanaLogin extends JFrame implements Runnable{
 		//Creamos las tablas
 		bd.createTable(con);
 
+		//Creamos el carrito
+		carrito = new ArrayList<Compra>();
 		//Creamos el manejador dentro del fichero para indicar a que fichero se mandarán los logs
 		Handler man = null;
 		try {

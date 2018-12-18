@@ -712,4 +712,18 @@ public class BD {
 		}
 
 	}
+	
+	public Producto obtenerProductosComprados(String nom) {
+		String query = "SELECT * FROM PRODUCTOS WHERE nombre='"+ nom + "'";
+		Producto p = null;
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next())
+				p = new Producto (rs.getString("codigo"), rs.getString("nombre"), rs.getDouble("precio"), rs.getInt("stock"), rs.getString("descripcion"), rs.getString("ruta"), rs.getString("categoria"), rs.getString("oferta"), rs.getString("tipo"));
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
 }

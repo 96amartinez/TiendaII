@@ -11,13 +11,13 @@ public class ProductoVideojuegos extends Producto{
 	}
 	
 	public ProductoVideojuegos(String cod, String nombre, double precio, int stock, String desc, String ruta,
-			String categoria, boolean oferta, String tipo) {
+			String categoria, String oferta, String tipo) {
 		super(cod, nombre, precio, stock, desc, ruta, categoria, oferta, tipo);
 		// TODO Auto-generated constructor stub
 	}
 
 	public ProductoVideojuegos(String cod, String nombre, double precio, int stock, String desc, String ruta,
-			String categoria, boolean oferta, String tipo, String plataforma) {
+			String categoria, String oferta, String tipo, String plataforma) {
 		super(cod, nombre, precio, stock, desc, ruta, categoria, oferta, tipo);
 		this.plataforma = plataforma;
 	}

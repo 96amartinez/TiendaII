@@ -12,13 +12,13 @@ public class ProductosConTalla extends ProductosDeportivos{
 	}
 	
 	public ProductosConTalla(String cod, String nombre, double precio, int stock, String desc, String ruta,
-			String categoria, boolean oferta, String tipo, String color, String marca) {
+			String categoria, String oferta, String tipo, String color, String marca) {
 		super(cod, nombre, precio, stock, desc, ruta, categoria, oferta, tipo, color, marca);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public ProductosConTalla(String cod, String nombre, double precio, int stock, String desc, String ruta,
-			String categoria, boolean oferta, String tipo) {
+			String categoria, String oferta, String tipo) {
 		super(cod, nombre, precio, stock, desc, ruta, categoria, oferta, tipo);
 		// TODO Auto-generated constructor stub
 	}

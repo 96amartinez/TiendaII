@@ -19,10 +19,12 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 import BaseDeDatos.BD;
+import Datos.Compra;
 import Datos.Producto;
 import Datos.Usuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -39,7 +41,7 @@ public class VentanaDescProducto extends JFrame {
 
 	private ImageIcon im;
 	private JScrollPane scrollPane;
-	
+
 	private void ponerCamposInvisibles() {
 		lblCantidad.setVisible(false);
 		cbCantidad.setVisible(false);
@@ -62,7 +64,7 @@ public class VentanaDescProducto extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 
-		
+
 
 		JPanel paneSur = new PanelFondo();
 		paneSur.setOpaque(true);
@@ -81,8 +83,37 @@ public class VentanaDescProducto extends JFrame {
 			}
 		});
 		paneSur.add(btnVolver);
+		
+		JButton btnPagar = new JButton("Pagar");
+		btnPagar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				v.dispose();
+				VentanaFactura vf = new VentanaFactura();
+				vf.setVisible(true);
+				
+			}
+		});
+		paneSur.add(btnPagar);
 
 		JButton btnAadirAlCarrito = new JButton("Añadir al Carrito");
+		btnAadirAlCarrito.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Producto p = VentanaLogin.bd.obtenerProductosComprados(nom);
+				if(cbCantidad.getSelectedItem().equals(0)) {
+					JOptionPane.showMessageDialog(null, "La cantidad tiene que ser mayor que 0");
+				}
+				else if(p!=null && cbCantidad.getSelectedItem()!=null) {
+					Integer unidades = (Integer)cbCantidad.getSelectedItem();
+					Compra c = new Compra(p, unidades.intValue());
+					VentanaLogin.carrito.add(c);
+				}
+
+			}
+		});
 		paneSur.add(btnAadirAlCarrito);
 
 		JPanel panel = new PanelFondo();
@@ -93,7 +124,7 @@ public class VentanaDescProducto extends JFrame {
 		lblNombre.setBounds(20, 6, 396, 20);
 		panel.add(lblNombre);
 
-		lblPrecio = new JLabel("Precio: ");
+		lblPrecio = new JLabel("Precio: "+precio + "€");
 		lblPrecio.setBounds(20, 197, 61, 16);
 		panel.add(lblPrecio);
 
@@ -102,7 +133,7 @@ public class VentanaDescProducto extends JFrame {
 		lblFoto.setBounds(10,39,173,158);
 		im.setImage(im.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH));
 		panel.add(lblFoto);
-		
+
 		//im.setImage(im.getImage().getScaledInstance(lblFoto.getWidth()*2, lblFoto.getHeight()*2, Image.SCALE_SMOOTH));
 
 
@@ -129,7 +160,7 @@ public class VentanaDescProducto extends JFrame {
 		lblTalla = new JLabel("Talla: ");
 		lblTalla.setBounds(264, 96, 61, 16);
 		panel.add(lblTalla);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(195, 136, 234, 55);
 		panel.add(scrollPane);
@@ -140,7 +171,7 @@ public class VentanaDescProducto extends JFrame {
 		textArea.setEditable(false);
 		textArea.setOpaque(false);
 		textArea.setLineWrap(true);
-		
+
 		ponerCamposInvisibles();
 		if(cat.equals("Baloncesto")) {
 			if(tipo.equals("Camisetas") || tipo.equals("Sudaderas") || tipo.equals("Pantalones") || tipo.equals("Playeras")) {

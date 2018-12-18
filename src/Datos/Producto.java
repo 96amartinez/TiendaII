@@ -9,10 +9,10 @@ public class Producto {
 	private String desc;
 	private String ruta;
 	private String categoria; //Fútbol, padel, baloncesto, ciclismo y videojuegos
-	private boolean oferta;
+	private String oferta;
 	private String tipo;
 	
-	public Producto(String cod, String nombre, double precio, int stock, String desc, String ruta, String categoria, boolean oferta, String tipo) {
+	public Producto(String cod, String nombre, double precio, int stock, String desc, String ruta, String categoria, String oferta, String tipo) {
 		super();
 		this.cod = cod;
 		this.nombre = nombre;
@@ -86,11 +86,11 @@ public class Producto {
 		this.categoria = categoria;
 	}
 	
-	public boolean getOferta() {
+	public String getOferta() {
 		return oferta;
 	}
 	
-	public void setOferta(boolean oferta) {
+	public void setOferta(String oferta) {
 		this.oferta = oferta;
 	}
 	
