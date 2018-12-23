@@ -74,21 +74,16 @@ public class TablaAdminProductos extends JFrame {
 					this.setBackground(Color.GREEN);
 			}
 			if(column==3 ) {
+				String nom = (String)table.getValueAt(row, 14);
 				int valor = ((Integer)value).intValue();
 				if(valor<20 && (valor!=0)) {
 					this.setBackground(Color.orange);
+				}else if((valor == 0 && (nom==null || !nom.equals("Minijuegos")))) {
+					this.setBackground(Color.RED);
 				}
 				
-			}if(column==3 ) {
-				int valor = ((Integer)value).intValue();
-				if((valor==0)) {
-					this.setBackground(Color.red);
-				}
-			}	
-						//			if(column==3)
-			//				this.setBackground(Color.LIGHT_GRAY);
-			//			//	this.setEnabled(true);
-			//				this.setFont(new Font(Font.SERIF, Font.PLAIN, 12));
+			}
+			
 			return this;
 		}
 	}
