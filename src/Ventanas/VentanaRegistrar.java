@@ -163,7 +163,8 @@ public class VentanaRegistrar extends JFrame {
 				String num = txtNumtel.getText();
 				String dom = txtDomicilio.getText();
 				String cuenta = txtCuenta.getText();
-				Usuario user = new Usuario(DNI,nombre,ape, nick, cont, num, dom, cuenta);
+				String Imagen = null;
+				Usuario user = new Usuario(DNI,nombre,ape, nick, cont, num, dom, cuenta, Imagen);
 				int resul = BD.existeUsuario(user);
 				
 				if(DNI.equals("")) {

@@ -10,6 +10,7 @@ public class Usuario {
 	private String numTel;
 	private String domicilio;
 	private String cuentaBancaria;
+	private String Imagen;
 
 
 	/**
@@ -28,9 +29,12 @@ public class Usuario {
 	 * @param apellido: Apellido del usuario
 	 * @param contrasenia : Contrasenia del usuario
 	 * @param nick : Nick del usuario
-	 * @param cuenta : Cuenta bancaria del usuario
+	 * @param cuentaBancaria : Cuenta bancaria del usuario
+	 * @param numTel: Número de telefono del usuario
+	 * @param domicilio: Domicilio del usuario
+	 * @param Imagen: Imagen del usuario
 	 */
-	public Usuario(String dNI, String nombre, String apellido,String nick ,String contrasenia , String numTel, String domicilio, String cuentaBancaria) {
+	public Usuario(String dNI, String nombre, String apellido,String nick ,String contrasenia , String numTel, String domicilio, String cuentaBancaria, String Imagen) {
 		super();
 		DNI = dNI;
 		this.nombre = nombre;
@@ -40,6 +44,7 @@ public class Usuario {
 		this.numTel=numTel;
 		this.domicilio=domicilio;
 		this.cuentaBancaria = cuentaBancaria;
+		this.Imagen = Imagen;
 	}
 
 	/**
@@ -119,7 +124,14 @@ public class Usuario {
 		this.cuentaBancaria = cuentaBancaria;
 	}
 
-
+	public String getImagen() {
+		return Imagen;
+	}
+	
+	public void setImagen(String Imagen) {
+		this.Imagen = Imagen;
+	}
+	
 	/**
 	 * Método toString de la Clase Usuario
 	 */
@@ -127,13 +139,7 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [DNI=" + DNI + ", nombre=" + nombre + ", apellido=" + apellido + ", nick=" + nick
 				+ ", contrasenia=" + contrasenia + ", numTel=" + numTel + ", domicilio=" + domicilio
-				+ ", cuentaBancaria=" + cuentaBancaria + "]";
+				+ ", cuentaBancaria=" + cuentaBancaria + ", Imagen=" + "]";
 	}
-
-
-
-
-
-
 
 }

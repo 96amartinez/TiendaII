@@ -131,26 +131,34 @@ public class VentanaPadel extends JFrame {
 					double peso = 0;
 					if(cbTipo.getSelectedIndex() != -1)
 						tipo = (String)cbTipo.getSelectedItem();
-					else {
-						seleccionado = false;
-						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
-					}peso = sPeso.getValue() * 100; 
+//					else {
+//						seleccionado = false;
+//						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
+//					}
+					String talla = null;
+					if(cbTalla.getSelectedIndex() != -1)
+						talla = (String)cbTalla.getSelectedItem();
+//					else {
+//						seleccionado = false;
+//						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
+//					}
+					peso = sPeso.getValue() * 100; 
 					String color = null;
 					if(cbColor.getSelectedIndex() != -1)
 						color = (String) cbColor.getSelectedItem();
-					else {
-						seleccionado = false;
-						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
-					}
+//					else {
+//						seleccionado = false;
+//						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
+//					}
 					String marca = null;
 					if(cbMarca.getSelectedIndex() != -1)
 						marca = (String) cbMarca.getSelectedItem();
-					else {
-						seleccionado = false;
-						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
-					}
+//					else {
+//						seleccionado = false;
+//						JOptionPane.showMessageDialog(null, "Tienes que seleccionar todas las opciones");
+//					}
 					panelCentro.removeAll();
-					ArrayList<String> rutasFiltradas = VentanaLogin.bd.obtenerRutasConFiltroPadel(tipo,peso,color,marca, "Pádel");
+					ArrayList<String> rutasFiltradas = VentanaLogin.bd.obtenerRutasConFiltroPadel(tipo,peso,color,marca, "Pádel", talla);
 					for(int i=0;i<rutasFiltradas.size();i++) {
 						String ruta = rutasFiltradas.get(i);
 						ImageIcon im = new ImageIcon(ruta);

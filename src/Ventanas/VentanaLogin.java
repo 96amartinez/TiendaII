@@ -237,7 +237,7 @@ public class VentanaLogin extends JFrame implements Runnable{
 					log.info("El usuario ha pulsado el botón de iniciar sesión");
 					String nick = txtNick.getText();
 					String con = String.valueOf(pssContrasenia.getPassword());
-					Usuario user = new Usuario(null,null,null,nick,con, null, null,null);
+					Usuario user = new Usuario(null,null,null,nick,con, null, null,null,null);
 					int resul = BD.existeUsuario(user);
 					if(resul==0){
 						//NICK MAL INTRODUCIDO. 
@@ -279,7 +279,7 @@ public class VentanaLogin extends JFrame implements Runnable{
 				log.info("El usuario ha pulsado el botón de iniciar sesión");
 				String nick = txtNick.getText();
 				String con = String.valueOf(pssContrasenia.getPassword());
-				Usuario user = new Usuario(null,null,null,nick,con, null, null,null);
+				Usuario user = new Usuario(null,null,null,nick,con, null, null,null,null);
 				int resul = BD.existeUsuario(user);
 				if(resul==0){
 					//NICK MAL INTRODUCIDO. 

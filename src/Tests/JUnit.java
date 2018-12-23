@@ -24,9 +24,9 @@ public class JUnit extends TestCase{
 		BD.conectar();
 
 		//Tanto el Usuario "u" como el Usuario "u1" están registrados en la BD, el Usuario "u2" no.
-		Usuario u = new Usuario("11111111A", "Aitor", "Martinez", "96amartinez", "96amartinez", "623665897", "Barakaldo", "1234567890");
-		Usuario u1 = new Usuario("22222222A", "Aitor2", "Martinez2", "admin", "admin", "699883451", "Barakaldo", "9876543210");
-		Usuario u2 = new Usuario("W", "W", "W", "W", "W", "W", "W", "W");
+		Usuario u = new Usuario("79004350V", "Aitor", "Martinez", "96amartinez", "96amartinez", "688663292", "Magallanes Nº3, 4º Izq", "111111111111111","96amartinez.jpg");
+		Usuario u1 = new Usuario("79004350V", "Aitor", "Martinez", "admin", "admin", "688663292", "Lehendakari Aguirre Nº 10 Ático A", "111111111111111","admin.jpg");
+		Usuario u2 = new Usuario("W", "W", "W", "W", "W", "W", "W", "W", "foto.jpg");
 
 		//Si el usuario está registrado == 2, si no está registrado ==0
 		assertTrue("Usuario registrado en la BD", BD.existeUsuario(u)==2);
