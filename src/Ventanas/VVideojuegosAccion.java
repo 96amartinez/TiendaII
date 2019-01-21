@@ -22,11 +22,17 @@ import javax.swing.border.LineBorder;
 import BaseDeDatos.BD;
 
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 
 public class VVideojuegosAccion extends JFrame {
@@ -38,7 +44,7 @@ public class VVideojuegosAccion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VVideojuegosAccion() {
+	public VVideojuegosAccion(String nick) {
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -60,7 +66,7 @@ public class VVideojuegosAccion extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 		});
@@ -99,37 +105,32 @@ public class VVideojuegosAccion extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelPS4.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"PS4",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"PS4",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -161,37 +162,32 @@ public class VVideojuegosAccion extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelXBOX.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"XBox",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"XBox",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -221,37 +217,32 @@ public class VVideojuegosAccion extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelPS3.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"PS3",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"PS3",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -281,40 +272,49 @@ public class VVideojuegosAccion extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelGratis.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
-				String url = im.getDescription();
-				v.dispose();
+				String imagen = im.getDescription();
+				//v.dispose();
+				URL url=null;
+				try {
+				    url = new URL(BD.obtenerURLJuego(imagen));
+				    try {
+				        Desktop.getDesktop().browse(url.toURI());
+				    } catch (IOException e) {
+				        e.printStackTrace();
+				    } catch (URISyntaxException e) {
+				        e.printStackTrace();
+				    }
+				} catch (MalformedURLException e1) {
+				    e1.printStackTrace();
+				}
 				//VentanaDescProducto vdp = new VentanaDescProducto(url,v);
 				//vdp.setVisible(true);
 			}
 		});
+
 
 
 

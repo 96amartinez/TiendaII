@@ -92,7 +92,7 @@ public class VentanaJListUsuarios extends JFrame {
 				if(!lista.isSelectionEmpty()) {
 					DefaultListModel<String> dlm1 = (DefaultListModel<String>)lista.getModel();
 					int pos = lista.getSelectedIndex();
-					VentanaLogin.bd.borrarProductoJList(dlm1.getElementAt(pos));
+					VentanaLogin.bd.borrarUsuarioJList(dlm1.getElementAt(pos));
 					dlm1.removeElementAt(pos);
 					lista.setModel(dlm1);
 					

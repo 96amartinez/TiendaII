@@ -34,26 +34,11 @@ public class VentanaPadel extends JFrame {
 	private JComboBox cbColor;
 	private JSlider sPeso;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPadel frame = new VentanaPadel();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPadel() {
+	public VentanaPadel(String nick) {
 		JFrame v = this;
 		setExtendedState(MAXIMIZED_BOTH);
 		//v.setResizable(false);
@@ -89,7 +74,6 @@ public class VentanaPadel extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				rellenaSliderPeso((String)cbTipo.getSelectedItem());
 				rellenaComboTalla((String)cbTipo.getSelectedItem());
 				rellenaComboColor((String)cbTipo.getSelectedItem());
@@ -123,7 +107,6 @@ public class VentanaPadel extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				boolean seleccionado;
 				do {
 					seleccionado = true;
@@ -184,9 +167,8 @@ public class VentanaPadel extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 
@@ -207,7 +189,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboMarca() {
-		// TODO Auto-generated method stub
 		cbMarca.addItem("");
 		cbMarca.addItem("Artengo");
 		cbMarca.addItem("Head");
@@ -221,7 +202,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboColor() {
-		// TODO Auto-generated method stub
 		cbColor.addItem("");
 		cbColor.addItem("Amarillo");
 		cbColor.addItem("Azul");
@@ -233,7 +213,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTalla() {
-		// TODO Auto-generated method stub
 		cbTalla.addItem("");
 		cbTalla.addItem("S");
 		cbTalla.addItem("M");
@@ -246,7 +225,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTipo() {
-		// TODO Auto-generated method stub
 		cbTipo.addItem("");
 		cbTipo.addItem("Palas");
 		cbTipo.addItem("Camisetas");
@@ -259,7 +237,6 @@ public class VentanaPadel extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void rellenaComboMarca(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbMarca.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboMarca();
@@ -322,7 +299,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboColor(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbColor.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboColor();
@@ -379,7 +355,6 @@ public class VentanaPadel extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTalla(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbTalla.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboTalla();
@@ -409,7 +384,6 @@ public class VentanaPadel extends JFrame {
 	}
 
 	private void rellenaSliderPeso(String selectedItem) {
-		// TODO Auto-generated method stub
 		sPeso.removeAll();
 		if(selectedItem.equals("")) {
 			sPeso.setEnabled(true);

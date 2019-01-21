@@ -39,7 +39,7 @@ public class VentanaCiclismo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCiclismo() {
+	public VentanaCiclismo(String nick) {
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -62,9 +62,8 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 		});
@@ -97,37 +96,32 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelBiciC.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Bicicletas Carretera", BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Bicicletas Carretera", BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -150,37 +144,32 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelBiciM.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Bicicletas Montaña",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Bicicletas Montaña",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -203,37 +192,32 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelCasco.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Cascos",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Cascos",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -256,37 +240,32 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelBote.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Botellines",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Botellines",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});
@@ -309,37 +288,32 @@ public class VentanaCiclismo extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelMaillot.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Maillots",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Ciclismo", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Maillots",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 			}
 		});

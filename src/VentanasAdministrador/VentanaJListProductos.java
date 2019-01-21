@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import BaseDeDatos.BD;
 import Ventanas.VentanaLogin;
 
 import javax.swing.JScrollPane;
@@ -92,10 +93,15 @@ public class VentanaJListProductos extends JFrame {
 				if(!lista.isSelectionEmpty()) {
 					DefaultListModel<String> dlm1 = (DefaultListModel<String>)lista.getModel();
 					int pos = lista.getSelectedIndex();
-					VentanaLogin.bd.borrarProductoJList(dlm1.getElementAt(pos));
+					String elemento = dlm1.getElementAt(pos);
+					int p = elemento.indexOf("-");
+					String nombre = elemento.substring(0,p);
+					String talla = elemento.substring(p+1);
+					BD.borrarProductoJList(nombre,talla);
 					dlm1.removeElementAt(pos);
 					lista.setModel(dlm1);
 					
+				
 				}
 			}
 		});

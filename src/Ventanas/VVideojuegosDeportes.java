@@ -12,15 +12,27 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
+
+import BaseDeDatos.BD;
+
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 
 public class VVideojuegosDeportes extends JFrame {
@@ -28,26 +40,11 @@ public class VVideojuegosDeportes extends JFrame {
 	private JPanel contentPane, panelPS4, panelPS3, panelXBOX, panelGratis;
 	private JFrame v = this;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VVideojuegosDeportes frame = new VVideojuegosDeportes();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public VVideojuegosDeportes() {
+	public VVideojuegosDeportes(String nick) {
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -69,7 +66,7 @@ public class VVideojuegosDeportes extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 		});
@@ -111,6 +108,40 @@ public class VVideojuegosDeportes extends JFrame {
 //		panelPS4.add(lblPs);
 		panelPS4.setLayout(new GridLayout(0,2));
 		cargarImagenesPS4();
+		panelPS4.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent evento) {
+				Point p = evento.getPoint();
+				JLabel lblProducto = (JLabel)panelPS4.getComponentAt(p);
+				ImageIcon im = (ImageIcon)lblProducto.getIcon();
+				String url = im.getDescription();
+				v.dispose();
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"PS4",BD.obtenerDescProducto(url),BD.obtenerCodProducto(url));
+				vdp.setVisible(true);
+			}
+		});
+
 
 		
 
@@ -139,6 +170,39 @@ public class VVideojuegosDeportes extends JFrame {
 		
 		panelXBOX.setLayout(new GridLayout(0, 2));
 		cargarImagenesXBOX();
+panelXBOX.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent evento) {
+				Point p = evento.getPoint();
+				JLabel lblProducto = (JLabel)panelXBOX.getComponentAt(p);
+				ImageIcon im = (ImageIcon)lblProducto.getIcon();
+				String url = im.getDescription();
+				v.dispose();
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"XBox",BD.obtenerDescProducto(url),BD.obtenerCodProducto(url));
+				vdp.setVisible(true);
+			}
+		});
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
@@ -164,6 +228,38 @@ public class VVideojuegosDeportes extends JFrame {
 		
 		panelPS3.setLayout(new GridLayout(0, 2));
 		cargarImagenesPS3();
+		panelPS3.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent evento) {
+				Point p = evento.getPoint();
+				JLabel lblProducto = (JLabel)panelPS3.getComponentAt(p);
+				ImageIcon im = (ImageIcon)lblProducto.getIcon();
+				String url = im.getDescription();
+				v.dispose();
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url, v, "Videojuegos", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url), "PS3", BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
+			}
+		});
 		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_3 = new GridBagConstraints();
@@ -185,6 +281,51 @@ public class VVideojuegosDeportes extends JFrame {
 		
 		panelGratis.setLayout(new GridLayout(0, 2));
 		cargarImagenesGratis();
+panelGratis.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent evento) {
+				Point p = evento.getPoint();
+				JLabel lblProducto = (JLabel)panelGratis.getComponentAt(p);
+				ImageIcon im = (ImageIcon)lblProducto.getIcon();
+				String imagen = im.getDescription();
+				//v.dispose();
+				URL url= null;
+				try {
+					url = new URL(BD.obtenerURLJuego(imagen));
+					try {
+						Desktop.getDesktop().browse(url.toURI());
+					} catch(IOException e) {
+						e.printStackTrace();
+					} catch(URISyntaxException e) {
+						e.printStackTrace();
+					}
+				} catch(MalformedURLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		
 
 

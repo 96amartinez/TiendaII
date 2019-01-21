@@ -26,7 +26,7 @@ public class VentanaDescripcionPatrocinadores extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaDescripcionPatrocinadores(String url, JFrame va) {
+	public VentanaDescripcionPatrocinadores(String url, JFrame va, String nick) {
 		ventanaAnterior = va;
 		JFrame v = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,7 @@ public class VentanaDescripcionPatrocinadores extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.dispose();
-				VentanaPatrocinadores vp = new VentanaPatrocinadores(v);
+				VentanaPatrocinadores vp = new VentanaPatrocinadores(v, nick);
 				vp.setVisible(true);
 			}
 		});

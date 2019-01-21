@@ -220,19 +220,16 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					log.info("El usuario ha pulsado el botón de iniciar sesión");
 					String nick = txtNick.getText();
@@ -258,7 +255,6 @@ public class VentanaLogin extends JFrame implements Runnable{
 						JOptionPane.showMessageDialog(null, "BIENVENIDO");
 						if(txtNick.getText().equals("admin")&&pssContrasenia.getText().equals("admin")){
 							//EL USUARIO ES ADMINISTRADOR; ACCEDE A VENTANA ADMINISTRADOR Y TIENE VENTAJAS DE ADMINISTRADOR
-							//TODO			//VentanaAdministrador frame = new VentanaAdministrador();
 							log.info("El administrador ha iniciado sesión");
 							VentanaAdmin va = new VentanaAdmin(v);
 							va.setVisible(true);
@@ -266,7 +262,7 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 						}else{
 							log.info(txtNick.getText() + " ha iniciado sesión");
-							VentanaMenu frame2 = new VentanaMenu(v);
+							VentanaMenu frame2 = new VentanaMenu(v, nick);
 							frame2.setVisible(true);
 							VentanaLogin.this.dispose();
 						}
@@ -300,7 +296,6 @@ public class VentanaLogin extends JFrame implements Runnable{
 					JOptionPane.showMessageDialog(null, "BIENVENIDO");
 					if(txtNick.getText().equals("admin")&&pssContrasenia.getText().equals("admin")){
 						//EL USUARIO ES ADMINISTRADOR; ACCEDE A VENTANA ADMINISTRADOR Y TIENE VENTAJAS DE ADMINISTRADOR
-						//TODO			//VentanaAdministrador frame = new VentanaAdministrador();
 						log.info("El administrador ha iniciado sesión");
 						VentanaAdmin va = new VentanaAdmin(v);
 						va.setVisible(true);
@@ -308,7 +303,7 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 					}else{
 						log.info(txtNick.getText() + " ha iniciado sesión");
-						VentanaMenu frame2 = new VentanaMenu(v);
+						VentanaMenu frame2 = new VentanaMenu(v, nick);
 						frame2.setVisible(true);
 						VentanaLogin.this.dispose();
 					}
@@ -324,19 +319,16 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					log.info("El usuario ha pulsado el botón registrarse");
 					v.dispose();
@@ -399,7 +391,6 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				try {
 					while(true) {
 						btnAceptar.setForeground(Color.RED);
@@ -443,7 +434,6 @@ public class VentanaLogin extends JFrame implements Runnable{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		Thread ct = Thread.currentThread();
 		while(ct == h1) {   
 			calcula();

@@ -111,31 +111,37 @@ public class VentanaRegistrar extends JFrame {
 
 		txtDNI = new JTextField();
 		txtDNI.setBounds(182, 43, 130, 26);
+		txtDNI.setToolTipText("El campo DNI tiene que tener 9 carácteres");
 		panelCentro.add(txtDNI);
 		txtDNI.setColumns(10);
 
 		txtNombre = new JTextField();
 		txtNombre.setBounds(182, 74, 130, 26);
+		txtNombre.setToolTipText("El campo nombre tiene un máximo de 20 carácteres y un mínimo de 3");
 		panelCentro.add(txtNombre);
 		txtNombre.setColumns(10);
 
 		txtApellido = new JTextField();
 		txtApellido.setBounds(182, 102, 130, 26);
+		txtApellido.setToolTipText("El campo apellido tiene un máximo de 20 carácteres y un mínimo de 3");
 		panelCentro.add(txtApellido);
 		txtApellido.setColumns(10);
 
 		txtNick = new JTextField();
 		txtNick.setBounds(182, 130, 130, 26);
+		txtNick.setToolTipText("El campo nick tiene un máximo de 20 carácteres y un mínimo de 3");
 		panelCentro.add(txtNick);
 		txtNick.setColumns(10);
 
 		txtContrasenia = new JTextField();
 		txtContrasenia.setBounds(182, 158, 130, 26);
+		txtContrasenia.setToolTipText("El campo contraseña tiene un máximo de 20 carácteres y un mínimo de 3");
 		panelCentro.add(txtContrasenia);
 		txtContrasenia.setColumns(10);
 
 		txtCuenta = new JTextField();
 		txtCuenta.setBounds(182, 242, 130, 26);
+		txtCuenta.setToolTipText("El campo cuenta bancaria tiene que tener 15 carácteres");
 		panelCentro.add(txtCuenta);
 		txtCuenta.setColumns(10);
 
@@ -225,6 +231,7 @@ public class VentanaRegistrar extends JFrame {
 		
 		txtNumtel = new JTextField();
 		txtNumtel.setBounds(182, 186, 130, 26);
+		txtNumtel.setToolTipText("El campo número de teléfono tiene que tener 9 carácteres");
 		panelCentro.add(txtNumtel);
 		txtNumtel.setColumns(10);
 		
@@ -232,5 +239,34 @@ public class VentanaRegistrar extends JFrame {
 		txtDomicilio.setBounds(182, 214, 130, 26);
 		panelCentro.add(txtDomicilio);
 		txtDomicilio.setColumns(10);
+	
+		JButton btnCamara = new JButton();
+		Image imCam = new ImageIcon("Imagenes/Camara.png").getImage();
+		ImageIcon imCam1 = new ImageIcon(imCam.getScaledInstance(70, 55, Image.SCALE_SMOOTH));
+		btnCamara.setIcon(imCam1);
+		btnCamara.setBounds(350, 1, 70, 55);
+		btnCamara.setOpaque(false);
+		btnCamara.setContentAreaFilled(false);
+		btnCamara.setBorderPainted(false);
+		panelCentro.add(btnCamara);
+
 	}
+	private char letraDNI(String dni) {
+		String letras= "TRWAGMYFPDXBNJZSQVHLCKE";
+		long d = Long.parseLong(dni);
+		int resto = (int)d % 23;
+		return letras.charAt(resto);
+	}
+	public boolean dniCorrecto(String dni) {
+		char letra = letraDNI(dni.substring(0, dni.length()-1));
+		boolean correcto=false;
+		int i=0;
+		while(Character.isDigit(dni.charAt(i)) && i<dni.length())
+			i++;
+		if(i==8 && dni.length()==9 && dni.charAt(8)==letra)
+			correcto=true;
+		return correcto;
+	}
+
+	
 }

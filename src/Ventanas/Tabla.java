@@ -96,7 +96,7 @@ public class Tabla extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unlikely-arg-type")
-	public Tabla() {
+	public Tabla(String nick) {
 		
 		//Creamos el manejador de fichero de nuevo
 		Handler handler = null;
@@ -175,7 +175,6 @@ public class Tabla extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				log.info("El usuario ha filtrado los productos en función de la marca");
-				// TODO Auto-generated method stub
 				String itemSelec = (String)cbmar.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
 					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Producto", 5));
@@ -254,7 +253,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función si están en oferta o no");
 				String itemSelec = (String)cof.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -283,7 +281,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función los diferentes equipos disponibles");
 				String itemSelec = (String)cbeq.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -363,7 +360,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función de las diferentes tallas disponibles");
 				String itemSelec = (String)cbtalla.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -430,7 +426,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función del tipo al que pertenecen");
 				String itemSelec = (String)cbtip.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -482,7 +477,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función del color del producto");
 				String itemSelec = (String)cbCol.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -523,7 +517,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función del deporte seleccionado");
 				String itemSelec = (String)cb.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -556,7 +549,6 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				log.info("El usuario ha filtrado los productos en función la plataforma de los videojuegos");
 				String itemSelec = (String)cbPlat.getSelectedItem();
 				if("Todos los productos".equals(itemSelec)) {
@@ -710,9 +702,8 @@ public class Tabla extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 
 			}

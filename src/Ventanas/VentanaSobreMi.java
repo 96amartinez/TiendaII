@@ -38,26 +38,12 @@ public class VentanaSobreMi extends JFrame {
 	private boolean dentro;
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaSobreMi frame = new VentanaSobreMi();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaSobreMi() {
+	public VentanaSobreMi(String nick) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 350);
@@ -81,9 +67,8 @@ public class VentanaSobreMi extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 				
 			}
@@ -134,7 +119,6 @@ public class VentanaSobreMi extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				try {
 					Desktop.getDesktop().browse(new URI("https://twitter.com/96amartinez"));
 				} catch(Exception ex){
@@ -160,7 +144,6 @@ public class VentanaSobreMi extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				try {
 					Desktop.getDesktop().browse(new URI("https://www.facebook.com/aitor.martinez.9699"));
 				} catch(Exception ex){

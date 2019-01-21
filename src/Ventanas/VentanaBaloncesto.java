@@ -44,7 +44,7 @@ public class VentanaBaloncesto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaBaloncesto() {
+	public VentanaBaloncesto(String nick) {
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -67,9 +67,8 @@ public class VentanaBaloncesto extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 				
 			}
@@ -110,29 +109,24 @@ public class VentanaBaloncesto extends JFrame {
 		panelCamisetas.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelCamisetas.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Camisetas", BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Camisetas", BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				v.dispose();
 			}
@@ -164,29 +158,24 @@ public class VentanaBaloncesto extends JFrame {
 		panelPlayeras.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelPlayeras.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Playeras",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick, url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Playeras",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				v.dispose();
 			}
@@ -218,29 +207,24 @@ public class VentanaBaloncesto extends JFrame {
 		panelPantalones.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelPantalones.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Pantalones",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Pantalones",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				v.dispose();
 			}
@@ -272,29 +256,24 @@ public class VentanaBaloncesto extends JFrame {
 		panelSudaderas.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelSudaderas.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Sudaderas",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Sudaderas",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				v.dispose();
 			}
@@ -325,29 +304,24 @@ public class VentanaBaloncesto extends JFrame {
 		panelBalones.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelBalones.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Balones",BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Baloncesto", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),"Balones",BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				v.dispose();
 			}

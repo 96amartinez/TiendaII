@@ -50,13 +50,15 @@ public class VentanaMenu extends JFrame {
 	private int indexFotos = 0;
 	private JLabel lblDescubreLasMejores;
 	private JLabel label;
+	private String nick;
+
 
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMenu(JFrame va) {
-				
+	public VentanaMenu(JFrame va, String nick) {
+		this.nick = nick;		
 		//JFrame v = this;
 		ventanaAnterior=va;
 		setResizable(false);
@@ -247,7 +249,6 @@ public class VentanaMenu extends JFrame {
 
 
 	private void crearMenu() {
-		// TODO Auto-generated method stub
 		barra = new JMenuBar();
 		menuElegirOpcion= new JMenu("Elegir Opción");
 		menuDeportes = new JMenu("Deportes");
@@ -264,9 +265,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VVideojuegosInfantiles ii = new VVideojuegosInfantiles();
+				VVideojuegosInfantiles ii = new VVideojuegosInfantiles(nick);
 				ii.setVisible(true);
 				//log.info("El usuario ha elegido la opción de ver los videojuegos infantiles");
 			}
@@ -276,9 +276,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VVideojuegosDeportes id = new VVideojuegosDeportes();
+				VVideojuegosDeportes id = new VVideojuegosDeportes(nick);
 				id.setVisible(true);
 				//log.info("El usuario ha elegido la opción de ver los videojuegos de deportes");
 			}
@@ -288,9 +287,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VVideojuegosEstrategia ie = new VVideojuegosEstrategia();
+				VVideojuegosEstrategia ie = new VVideojuegosEstrategia(nick);
 				ie.setVisible(true);
 				//log.info("El usuario ha decidido ver los videojuegos de la categoria estrategia");
 			}
@@ -300,10 +298,9 @@ public class VentanaMenu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-		//		VVideojuegosAccion ia = new VVideojuegosAccion();
-		//		ia.setVisible(true);
+				VVideojuegosAccion ia = new VVideojuegosAccion(nick);
+				ia.setVisible(true);
 				//log.info("El usuario ha tomado la decisión de ver los videojuegos de acción");
 			}
 		});
@@ -313,9 +310,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaPadel vp = new VentanaPadel();
+				VentanaPadel vp = new VentanaPadel(nick);
 				vp.setVisible(true);
 				//log.info("El usuario ha decidido ver los productos relacionados con el Pádel");
 			}
@@ -326,9 +322,8 @@ public class VentanaMenu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 			//	log.info("El usuario ha decidido ver los productos correspondientes al deporte Baloncesto");
-				VentanaBaloncesto vb = new VentanaBaloncesto();
+				VentanaBaloncesto vb = new VentanaBaloncesto(nick);
 				vb.setVisible(true);
 				v.dispose();
 			}
@@ -338,9 +333,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaCiclismo vc = new VentanaCiclismo();
+				VentanaCiclismo vc = new VentanaCiclismo(nick);
 				vc.setVisible(true);
 			//	log.info("El usuario ha tomado la decisión de ver los productos de ciclismo");
 			}
@@ -351,7 +345,6 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
 				String texto = "Como bien puedes apreciar en la foto de la derecha, nuestra tienda se situa en la calle Doctor Areilza Nº4. Es una de las tiendas en la que más vendemos y fue la primera. \n" + 
 						"Bilbao o Bilbo en euskera, es un municipio situado al norte de España.Posee una importante infraestructura de transportes que conecta con las principales capitales de \n" + 
@@ -360,7 +353,7 @@ public class VentanaMenu extends JFrame {
 						"En Bilbao existen muchos equipos de fúbol pero el más conocido es el Athletic Club. Fue fundado en 1989 y junto con Real Madrid y Barcelona son los únicos equipos que \n" + 
 						"no han bajado a 2ª división. Es por esto que es una de las tiendas que más vende, ya que aquí el 95% de la población es del athletic y compran mucho material del\n"+
 						"Athletic ya que son de gran calidad y a un precio muy económico";
-				VentanaTiendas vl = new VentanaTiendas("Bilbao","Imagenes/locBilbao.png","Imagenes/FotoBilbao.jpg",texto);
+				VentanaTiendas vl = new VentanaTiendas("Bilbao","Imagenes/locBilbao.png","Imagenes/FotoBilbao.jpg",texto, nick);
 				vl.setVisible(true);
 				//log.info("El usuario ha decidido buscar información sobre la tienda de Bilbao");
 			}
@@ -371,7 +364,6 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
 				String text = "Madrid es un municipio y ciudad de España. La localidad, con categoría histórica de villa,9​ es la capital del Estado10​ y de la Comunidad de Madrid. Dentro del término  \n" + 
 						"municipal de Madrid, el más poblado de España, viven 3 182 981 personas empadronadas, según el INE de 2017. El área metropolitana de Madrid tiene una población de \n" + 
@@ -380,7 +372,7 @@ public class VentanaMenu extends JFrame {
 						+ "La ciudad cuenta con un PIB nominal de 227 411 millones USD y un PIB per cápita nominal de 34 425 USD, lo que representa un PIB PPA per cápita de 40 720 USD,16​ siendo la\n"
 						+ " 1.ª área metropolitana española en actividad económica; y la décima de Europa. Madrid es también la ciudad española con más pernoctaciones hoteleras" ;
 				
-				VentanaTiendas vl = new VentanaTiendas("Madrid","Imagenes/locMadrid.png","Imagenes/fotoMadrid.jpg",text);
+				VentanaTiendas vl = new VentanaTiendas("Madrid","Imagenes/locMadrid.png","Imagenes/fotoMadrid.jpg",text, nick);
 				vl.setVisible(true);
 			//	log.info("El usuario quiere tener más información sobre Madrid y su tienda");
 			}
@@ -391,7 +383,6 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
 				String texto = "Barcelona es una ciudad española, capital de la comunidad autónoma de Cataluña, de la comarca del Barcelonés y de la provincia homónima. \n" + 
 						"Con una población de 1 620 809 habitantes en 2017,6​ es la segunda ciudad más poblada de España después de Madrid, y la undécima de la Unión Europea. \n" + 
@@ -400,7 +391,7 @@ public class VentanaMenu extends JFrame {
 						+ "Se ubica a orillas del mar Mediterráneo, a unos 120 km al sur de la cadena montañosa de los Pirineos y de la frontera con Francia, en un pequeño \n"
 						+ "llano litoral limitado por el mar al este, la sierra de Collserola al oeste, el río Llobregat al sur y el río Besós al norte. Por haber sido capital del condado \n"
 						+ "de Barcelona, se suele aludir a ella con la denominación antonomástica de Ciudad Condal." ;
-				VentanaTiendas vb = new VentanaTiendas("Barcelona","Imagenes/fotoBarcelona.jpg","Imagenes/locBarcelona.png",texto);
+				VentanaTiendas vb = new VentanaTiendas("Barcelona","Imagenes/fotoBarcelona.jpg","Imagenes/locBarcelona.png",texto, nick);
 				vb.setVisible(true);
 				//log.info("El usuario ha seleccionado la opción de nuestra tienda de Barcelona");
 			}
@@ -411,7 +402,6 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
 				String text = "Poza de la Sal es una villa situada a 43 km al norte de Burgos capital con unos 338 habitantes más o menos, ya que cada año va disminuyendo. Junto a los municipios de \n" + 
 						"Oña y Frías conforma la mancomunidad de Raices de Castilla. La localidad se encuentra enriscada en la ladera de una sierra, fortificada y protegida por el castillo de los \n" + 
@@ -420,7 +410,7 @@ public class VentanaMenu extends JFrame {
 						"Decidimos abrir una tienda aquí ya que siempre que tengo un hueco me gusta escaparme al pueblo de mis abuelos en el que tan buenos momentos he pasado y porque \n" + 
 						"paso practicamente todas las vacaciones en él. De esta manera cada vez que me fuera al pueblo podría estar pendiente de que todo estaría funcionando correctamente \n"+
 						"por no hablar de la cantidad de camisetas, videojuegos, bicicletas... que se venden a lo largo del verano";
-				VentanaTiendas vp = new VentanaTiendas("Poza de la Sal","Imagenes/locPoza.png","Imagenes/FotoPoza.png", text);
+				VentanaTiendas vp = new VentanaTiendas("Poza de la Sal","Imagenes/locPoza.png","Imagenes/FotoPoza.png", text, nick);
 				vp.setVisible(true);
 			//	log.info("El usuario quiere saber información sobre Poza de la Sal");
 			}
@@ -431,9 +421,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaSobreMi vs = new VentanaSobreMi();
+				VentanaSobreMi vs = new VentanaSobreMi(nick);
 				vs.setVisible(true);
 			//	log.info("El usuario ha elegido la opción sobre mi para saber algo sobre el autor de la aplicación");
 			}
@@ -445,9 +434,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaPatrocinadores vp = new VentanaPatrocinadores(v);
+				VentanaPatrocinadores vp = new VentanaPatrocinadores(v, nick);
 				vp.setVisible(true);
 			//	log.info("El usuario quiere ver todos los patrocinadores que colaboran con la tienda");
 			}
@@ -459,9 +447,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				Tabla t = new Tabla();
+				Tabla t = new Tabla(nick);
 				t.setVisible(true);
 			//	log.info("El usuario quiere ver todos los productos disponibles en la tienda");
 			}
@@ -476,9 +463,8 @@ public class VentanaMenu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaFutbol vf = new VentanaFutbol();
+				VentanaFutbol vf = new VentanaFutbol(nick);
 				vf.setVisible(true);
 			//	log.info("El usuario ha eleigo la opción para ver todos los productos relacionados con el Fútbol");
 
@@ -518,9 +504,8 @@ public class VentanaMenu extends JFrame {
 		menuPatrocinadores.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaPatrocinadores vp = new VentanaPatrocinadores(v);
+				VentanaPatrocinadores vp = new VentanaPatrocinadores(v, nick);
 				vp.setVisible(true);
 			}
 		});

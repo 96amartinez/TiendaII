@@ -21,6 +21,14 @@ public class BD {
 
 	private static Connection con;
 	private static Statement stmt;
+	
+	public static Connection getConexion() {
+		return con;
+	}
+	
+	public Statement getSentencia() {
+		return stmt;
+	}
 
 	/**
 	 * Método que crea una sentencia para acceder a la base de datos
@@ -29,7 +37,6 @@ public class BD {
 		try {
 			stmt = con.createStatement();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -55,7 +62,6 @@ public class BD {
 		try {
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -149,8 +155,6 @@ public class BD {
 	 * 			2: Si el nick del usuario es correcto y la contraseña también
 	 * 	
 	 */
-
-	//TODO HE TENIDO QUE PONER STATIC PARA PODER HACER EL JUNIT, NO SE SI ESTARÁ BIEN
 	public static int existeUsuario(Usuario u) {
 		String query = "SELECT * FROM Usuario WHERE nick='"+u.getNick()+"'";
 		ResultSet rs = null;
@@ -168,13 +172,11 @@ public class BD {
 					resul=2;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return resul;
@@ -191,7 +193,6 @@ public class BD {
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
 	}
@@ -261,7 +262,6 @@ public class BD {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -342,27 +342,27 @@ public class BD {
 	 * @param peso: atributo que hace referencia al peso de la pala
 	 * @param color: atributo que hace referencia a los colores de los productos
 	 * @param marca: atributo que hace referencia a las marcas de los productos
+	 * @param cat: atributo que hace referencia a la categoria del producto
 	 * @return aRutas que es un ArrayList con todas las rutas de los productos filtrados
 	 */
 		public ArrayList<String> obtenerRutasConFiltroPadel(String tipo, double peso, String color, String marca, String talla, String cat){
 			tipo = tipo == null ? "" : tipo;
-			//peso = peso == null ? "" : peso;
 			color = color == null ? "" : color;
 			marca = marca == null ? "" : marca;
 			talla = talla == null ? "" : talla;
 			cat = cat == null? "" : cat;
 			ResultSet rs;
 			String query = "SELECT DISTINCT(ruta) FROM PRODUCTOS";
-			query += (!tipo.isEmpty() ||/* peso.isEmpty() ||*/ color.isEmpty() || marca.isEmpty() || talla.isEmpty() || cat.isEmpty() ? " WHERE " : "");
+			query += (!tipo.isEmpty() || peso!=0 ||  !color.isEmpty() || !marca.isEmpty() || !talla.isEmpty() || !cat.isEmpty() ? " WHERE " : "");
 			int params = 0;
 			if(!tipo.isEmpty()) {
 				query += " tipo = '"+tipo+"'";
 				params++;
 			}
-//			if(!peso.isEmpty()) {
-//				query += params > 0 ? " and peso = '"+ peso + "'" : " peso = '" + peso + "'";
-//				params++;
-//			}
+			if(peso!=0) {
+				query += params > 0 ? " and peso between " + (peso-50) +" and "+ (peso+50)  : " peso between " + (peso-50) +" and "+ (peso+50);
+				params++;
+			}
 			if(!color.isEmpty()) {
 				query += params > 0 ? " and color = '"+ color + "'" : " color = '" + color + "'";
 				params++;
@@ -472,7 +472,6 @@ public class BD {
 				desc = rs.getString(1);
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return desc;
@@ -581,12 +580,11 @@ public class BD {
 	 * Método que borra un producto
 	 * @param cod: atributo que hace referencia al código del producto que se va a borrar
 	 */
-	public void borrarProductoJList(String nom) {
-		String query = "DELETE FROM PRODUCTOS WHERE nombre='"+nom+"'";
+	public static void borrarProductoJList(String nom, String talla) {
+		String query = "DELETE FROM PRODUCTOS WHERE nombre='"+nom+"' AND talla='" + talla + "'";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -618,8 +616,7 @@ public class BD {
 	 * @param codigo: atributo que hace referencia al código del producto
 	 * @param talla: atributo que hace referencia a la talla del producto
 	 */
-	public void borrarProductoConTalla(String codigo, String nombre, double precio, int stock, String desc,
-			String ruta, String cat, boolean oferta, String tipo, String marca, String talla, String color, String equipo, double peso) {
+	public void borrarProductoConTalla(String codigo, String talla) {
 		//Con comprobar el código y la talla valdría para borrarlo
 		String query = "DELETE FROM PRODUCTOS WHERE codigo='" + codigo + "'AND talla='"+ talla+"'";
 		try {
@@ -633,7 +630,6 @@ public class BD {
 	 * Método que borra un producto sin talla insertando el código del producto
 	 * @param codigo: atributo que hace referencia al código del producto
 	 */
-	//TODO Comprobar
 	public void borrarProductoSinTalla(String codigo) {
 		//A los productos que no tienen talla con pasar el código vale
 		String query = "DELETE FROM PRODUCTOS WHERE codigo='" + codigo + "'";
@@ -746,7 +742,6 @@ public class BD {
 			rs = stmt.executeQuery(query);
 			precio = rs.getDouble(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -754,6 +749,24 @@ public class BD {
 
 	}
 
+	/**
+	 * Método que obtiene el domicilio de los usuarios
+	 * @param nick: es el atributo que hace referencia al nick del usuario
+	 * @return dom : que es el domicilio del usuario
+	 */
+	public static String obtenerDomicilioUsuario (String nick) {
+		String query = "SELECT domicilio FROM USUARIO WHERE nick='" + nick + "'";
+		ResultSet rs;
+		String dom = null;
+		try {
+			rs = stmt.executeQuery(query);
+			dom = rs.getString(1);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dom;
+	}
+	
 	/**
 	 * Método que obtiene el nombre del producto seleccionado
 	 * @param ruta: es el atributo que hace referencia al producto seleccionado
@@ -893,27 +906,25 @@ public class BD {
 	 * @param col: atributo que hace referencia al color del producto
 	 * @param marca: atributo que hace referencia a la marca del producto
 	 */
-	//TODO COMPROBAR
 	//Estoy separando los métodos de insertar ya que no todos los productos deben de tener todos los atributos
 	//(Balones de Fútbol y Baloncesto, Botellines, Paleteros, protectores y pelotas
-	public static void insertarProductosSinEquipoTallaPeso(String cod, String nom, double prec, int stoc, String desc, 
-			String ruta, String cat, String oferta, String tipo, String col, String marca) {
+	public static void insertarProductosSinEquipTallaPeso(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta,  String color, String tipo,String marca) {
 		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
-				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo +
-				"' AND color ='" + col + "' AND marca='" + marca + "'";
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND color='" + color + "' AND tipo ='" + tipo + "' AND marca='" + marca +"'";
 		try {
 			ResultSet rs = stmt.executeQuery(query);
 			if(rs.next()) {
 				//Si el producto está repetido añadimos una unidad al stock
-				//El stock habría que quitarlo no??. DUDAS CON EL STOCK 
-				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +    
-						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo  +  
-						"' AND color ='" + col + "' AND marca='" + marca + "'";
+				//El stock habría que quitarlo?. DUDAS CON EL STOCK
+				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + null + "' AND color='" + color +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + marca + "' AND equipo='" + null + "' AND peso=" + null + " AND Plataforma ='" + null + "' AND url='" + null + "'";
 				stmt.executeUpdate(query);
 			}else {
 				//El producto no está registrado
 				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
-						+"','" + cat + "','" + oferta + "','" + tipo + "','" + col + "','" + marca +"'";
+						+"','" + cat + "','" + oferta + "','" + null + "','" + color + "','" + tipo + "','" + marca + "','" + null + "','" + null + "','" + null + "','" + null+"')";
 				stmt.executeUpdate(query);
 			}
 			rs.close();
@@ -921,6 +932,48 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Método para insertar productos con talla pero sin equipo
+	 * Como las botas, playeras, guantes, camiseta y pantalon de pádel
+	 * @param cod: atributo que hace referencia al codigo del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param prec: atributo que hace referencia al precio del producto
+	 * @param stoc: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param oferta: atributo que hace referencia a si el producto está en oferta o no
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param color: atributo que hace referencia al color del producto
+	 * @param tipo: atributo que hace referencia al color del producto
+	 * @param marca: atributo que hace referencia a la marca del producto
+	 */
+	public static void insertarProductosConTallaYSinEquipo(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta, String talla, String color, String tipo,String marca) {
+		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + " ' AND talla='" + talla +"' AND color='" + color + "' AND tipo ='" + tipo + "' AND marca='" + marca +"'";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				//Si el producto está repetido añadimos una unidad al stock
+				//El stock habría que quitarlo?. DUDAS CON EL STOCK
+				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + talla + "' AND color='" + color +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + marca + "' AND equipo='" + null + "' AND peso=" + null + " AND Plataforma ='" + null + "' AND url='" + null + "'";
+				stmt.executeUpdate(query);
+			}else {
+				//El producto no está registrado
+				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
+						+"','" + cat + "','" + oferta + "','" + talla + "','" + color + "','" + tipo + "','" + marca + "','" + null + "','" + null + "','" + null + "','" + null+"')";
+				stmt.executeUpdate(query);
+			}
+			rs.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * Método para insertar productos con equipo y talla
@@ -939,27 +992,23 @@ public class BD {
 	 * @param marca: atributo que hcae referencia a la marca del producto
 	 * @param equipo: atributo que hace referencia al equipo del producto
 	 */
-	//TODO COMPROBAR
-	//Este hace referencia a los productos que tienen equipo y talla (Camisetas, pantalones y sudaderas de Fútbol y Basket, Cascos y maillots)
-	public static void insertarProductosConEquipoTalla(String cod, String nom, String prec, String stoc, String desc, String ruta, 
-			String cat, String oferta, String talla, String col, String tipo, String marca, String equipo) {
-
-		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  " AND descripcion='" + desc +
-				"' AND ruta ='" + ruta + "' AND categoria='" + cat + "' AND oferta='" + oferta + " ' AND talla='" + talla + "' AND color='" + col + "' AND tipo='" + tipo +
-				"' AND marca='" + marca + "'AND equipo='" + equipo + "'";
+	public static void insertarProductosConEquipoYTalla(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta, String talla, String color, String tipo,String marca, String equipo) {
+		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + " ' AND talla='" + talla +"' AND color='" + color + "' AND tipo ='" + tipo + "' AND marca='" + marca +"' AND equipo='" + equipo + "'";
 		try {
 			ResultSet rs = stmt.executeQuery(query);
 			if(rs.next()) {
 				//Si el producto está repetido añadimos una unidad al stock
-				//El stock habria que ponerlo? DUDAS STOCK
-				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +     
-						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + talla + "' AND tipo ='" + tipo  +   
-						"' AND color ='" + col + "' AND marca='" + marca + "' AND equipo='" + equipo + "'";
+				//El stock habría que quitarlo?. DUDAS CON EL STOCK
+				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + talla + "' AND color='" + color +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + marca + "' AND equipo='" + equipo + "' AND peso=" + null + " AND Plataforma ='" + null + "' AND url='" + null + "'";
 				stmt.executeUpdate(query);
 			}else {
 				//El producto no está registrado
-				query = "INSERT INTO PRODUCTOS VALUES('" + cod + "','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta + "','" + cat + "','" + oferta + 
-						"','" + talla + "','" + tipo + "','" + col + "','" + marca + "','" + equipo + "'";
+				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
+						+"','" + cat + "','" + oferta + "','" + talla + "','" + color + "','" + tipo + "','" + marca + "','" + equipo + "','" + null + "','" + null + "','" + null+"')";
 				stmt.executeUpdate(query);
 			}
 			rs.close();
@@ -969,37 +1018,39 @@ public class BD {
 	}
 
 	/**
-	 * Método que sirve para insertar los videojuegos de pago
-	 * @param cod: atributo que hace referencia al código del producto
+	 * Método para insertar productos con peso
+	 * @param cod: atributo que hace referencia al codigo del producto
 	 * @param nom: atributo que hace referencia al nombre del producto
 	 * @param prec: atributo que hace referencia al precio del producto
 	 * @param stoc: atributo que hace referencia al stock del producto
-	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param desc: atributo que hace referencia a la descripcion del producto
 	 * @param ruta: atributo que hace referencia a la ruta del producto
-	 * @param cat: atributo que hace referencia a la categoría del producto
-	 * @param oferta: atributo que hace referencia a si el producto tiene oferta o no
-	 * @param tipo: atributo que hace referencia al tipo de producto
-	 * @param plat: atributo que hace referencia a la plataforma del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param oferta: atributo que hace referencia a si el producto está en oferta o no
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param color: atributo que hace referencia al color del producto
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param marca: atributo que hace referencia a la marca del producto
+	 * @param peso: atributo que hace referencia al peso del producto
 	 */
-	//TODO COMPROBAR
-	//En este caso son los artículos de videojuegos de pago
-	public static void insertarVideojuegosPago(String cod, String nom, String prec, String stoc, String desc, 
-			String ruta, String cat, String oferta, String tipo, String plat) {
+	//En este caso son los productos con peso
+	public static void insertarProductosConPeso(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta, String talla, String color, String tipo,String marca, double peso) {
 		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
-				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo + "' AND plataforma ='" + plat + "'";
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + talla + "' AND color='" + color +"' AND tipo ='" + tipo + "' AND marca='" + marca +"' AND peso =" + peso + "";
 		try {
 			ResultSet rs = stmt.executeQuery(query);
 			if(rs.next()) {
 				//Si el producto está repetido añadimos una unidad al stock
 				//El stock habría que quitarlo?. DUDAS CON EL STOCK
 				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
-						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo  +  
-						"' AND plataforma ='" + plat + "'";
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + talla + "' AND color='" + color +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + marca + "' AND equipo='" + null + "' AND peso=" + peso + " AND Plataforma ='" + null + "' AND url='" + null + "'";
 				stmt.executeUpdate(query);
 			}else {
 				//El producto no está registrado
 				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
-						+"','" + cat + "','" + oferta + "','" + tipo + "','" + plat +"'";
+						+"','" + cat + "','" + oferta + "','" + talla + "','" + color + "','" + tipo + "','" + marca + "','" + null + "'," + peso + ",'" + null + "','" + null+"')";
 				stmt.executeUpdate(query);
 			}
 			rs.close();
@@ -1007,6 +1058,86 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
+
+
+	/**
+	 * Método que sirve para insertar videojuegos de pago
+	 * @param cod: atributo que hace referencia al codigo del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param prec: atributo que hace referencia al precio del producto
+	 * @param stoc: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param oferta: atributo que hace referencia a si el producto está en oferta o no
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param plat: atributo que hace referencia a la plataforma del producto
+	 */
+	//En este caso son los artículos de videojuegos de pago
+	public static void insertarVideojuegosPago(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta, String tipo, String plat) {
+		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo + "' AND Plataforma ='" + plat + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				//Si el producto está repetido añadimos una unidad al stock
+				//El stock habría que quitarlo?. DUDAS CON EL STOCK
+				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + null + "' AND color='" + null +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + null + "' AND equipo='" + null + "' AND peso=" + null + " AND Plataforma ='" + plat + "' AND url='" + null + "'";
+				stmt.executeUpdate(query);
+			}else {
+				//El producto no está registrado
+				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
+						+"','" + cat + "','" + oferta + "','" + null + "','" + null + "','" + tipo + "','" + null + "','" + null + "','" + null + "','" + plat + "','" + null+"')";
+				stmt.executeUpdate(query);
+			}
+			rs.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que sirve para insertar videojuegos online
+	 * @param cod: atributo que hace referencia al codigo del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param prec: atributo que hace referencia al precio del producto
+	 * @param stoc: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param oferta: atributo que hace referencia a si el producto está en oferta o no
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param plat: atributo que hace referencia a la plataforma del producto
+	 * @param url: atributo que hace referencia a la url del producto
+	 */
+	public static void insertarVideojuegosOnline(String cod, String nom, double prec, int stoc, String desc, 
+			String ruta, String cat, String oferta, String tipo, String plat, String url) {
+		String query = "SELECT * FROM PRODUCTOS WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec +  
+				" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND tipo ='" + tipo + "' AND Plataforma ='" + plat + "' AND url='" + url + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				//Si el producto está repetido añadimos una unidad al stock
+				//El stock habría que quitarlo?. DUDAS CON EL STOCK
+				query = "UPDATE PRODUCTOS SET stock = stock " + stoc+ " WHERE codigo='" + cod + "' AND nombre='" + nom + "' AND precio=" + prec  +   
+						" AND descripcion='" + desc + "' AND ruta='" + ruta + "' AND categoria='" + cat + "' AND oferta ='" + oferta + "' AND talla='" + null + "' AND color='" + null +"' AND tipo ='" + tipo  +  
+						"' AND marca='" + null + "' AND equipo='" + null + "' AND peso=" + null + " AND Plataforma ='" + plat + "' AND url='" + url + "'";
+				stmt.executeUpdate(query);
+			}else {
+				//El producto no está registrado
+				query = "INSERT INTO PRODUCTOS VALUES('" + cod +"','" + nom + "'," + prec + "," + stoc + ",'" + desc + "','" + ruta
+						+"','" + cat + "','" + oferta + "','" + null + "','" + null + "','" + tipo + "','" + null + "','" + null + "','" + null + "','" + plat + "','" + url+"')";
+				stmt.executeUpdate(query);
+			}
+			rs.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * Método que borra los usuarios desde la ventana Administrador
@@ -1014,9 +1145,6 @@ public class BD {
 	 * @param nick: hace referencia al nick del usuario a eliminar
 	 * @param con: hace referencia a la contraseña del usuario a eliminar
 	 */
-	//TODO 
-	//Mirar si está bien. Es para borrar los usuarios desde la VentanaAdminUsuarios
-	//Me ha obligado a poner static
 	public static void borrarUsuario(String dni, String nick, String con) {
 		//Con saber el DNI, el nick y la contraseña valdría para borrar un usuario no?
 		//Como comprobar si el usuario está registrado
@@ -1032,15 +1160,29 @@ public class BD {
 	 * Método que sirve para modificar los atributos de los usuarios 
 	 * @param u: atributo que hace referencia a la clase Usuario
 	 */
-	//TODO
-	//Mirar si está bien.
 	public static void modificarUsuario(Usuario u) {
 		String query = "UPDATE USUARIO SET DNI='" + u.getDNI() + "' , nombre='" + u.getNombre() + "' , apellido='" + u.getApellido() +
-				"' , nick='" + u.getNick() + "' , contrasenia='" + u.getContrasenia() + "' , numTel='" + u.getNumTel() + 
-				"' , domicilio='" + u.getDomicilio() + "' , cuentaBancaria='" + u.getCuenta() + "' WHERE nick='" + u.getNick()+"'" ;//+ "' AND contrasenia='" + u.getContrasenia() + "'";
+				"' , numTel='" + u.getNumTel() + 
+				"' , domicilio='" + u.getDomicilio() + "' , cuentaBancaria='" + u.getCuenta() + "', Imagen='" + u.getImagen() + "' WHERE nick='" + u.getNick()+ "' AND contrasenia='" + u.getContrasenia() + "'";
+		
 		try {
 			stmt.executeUpdate(query);
 		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método que sirve para insertar usuarios nuevos
+	 * @param u: atributo que hace referencia a la clase Usuario
+	 */
+	//Insertar Usuario
+	public static void insertarUsuario(Usuario u) {
+		String query = "INSERT INTO USUARIO (DNI, nombre, apellido, nick, contrasenia, numTel, domicilio, cuentaBancaria, Imagen) VALUES ('" + u.getDNI() + "', '" + u.getNombre() + "', '" + u.getApellido() +
+				"', '" + u.getNick() + "', '" + u.getContrasenia() + "', '" + u.getNumTel() + "', '" + u.getDomicilio() + "', '" +u.getCuenta() + "', '" +u.getImagen() + "')";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1064,11 +1206,22 @@ public class BD {
 	}
 
 	/**
+	 * Método que inserta una fila en la tabla y en la bd
+	 */
+	public static void insertarFila() {
+		String query= "INSERT INTO USUARIO (DNI, nombre, apellido, nick, contrasenia, numTel, domicilio, cuentaBancaria, Imagen) VALUES  (' ', ' ',' ',' ',' ',' ',' ',' ',' ')";
+		try {
+			stmt.executeUpdate(query);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Método que devuelve el nick del usuario que está realizando las compras
 	 * @param nick: atributo que hace referencia al nick del usuario
 	 * @return: nic que es el nick del usuario que está realizando la compra
 	 */
-	//TODO
 	public static String obtenerNick(String nick) {
 		String query = "SELECT nick FROM USUARIO WHERE nick='" + nick + "'";
 		ResultSet rs;
@@ -1118,6 +1271,222 @@ public class BD {
 		}
 		return pt;
 	}
+	
+	/**
+	 * Método que obtiene el número de pedido
+	 * @return idPedido: que es el id del pedido
+	 */
+	public static int obtenerNumeroPedido() {
+		String query = "SELECT COUNT(numeroPedido) FROM PEDIDO";
+		int idPedido=1;
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			idPedido = rs.getInt(1);
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idPedido;
+	}
+	
+	/**
+	 * Método que guarda los datos del pedido
+	 * @param idPedido: atributo que hace referencia al id del pedido
+	 * @param usuario: atributo que hace referencia al usuario que ha realizado el pedido
+	 * @param fecha: atributo que hace referencia a la fecha en la que se ha realizado el pedido
+	 * @param codigoProducto: atributo que hace referencia al código del producto
+	 * @param unidades: atributo que hace referencia a las unidades del producto
+	 * @param precio: atributo que hace referencia al precio del producto
+	 */
+	public static void insertarPedidoEnTabla(int idPedido, String usuario, String fecha, String codigoProducto, int unidades, double precio) {
+		System.out.println(usuario);
+		String query ="INSERT INTO PEDIDO VALUES('"+usuario+"','"+fecha+"','"+codigoProducto+"',"+unidades+","+precio+","+idPedido+")";
+
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * Método que actualiza el stock cuando se realiza una compra
+	 * @param cod: atributo que hace referencia al codigo del producto
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param unidades: atributo que hace referencia al stock del producto
+	 */
+	public static void actualizarStock(String cod, String talla, int unidades) {
+		String query="";
+		if(talla!=null)
+			query = "UPDATE PRODUCTOS SET stock = stock - "+unidades+" WHERE codigo ='"+cod+"' AND talla='"+talla+"'";
+		else
+			query = "UPDATE PRODUCTOS SET stock = stock - "+unidades+" WHERE codigo ='"+cod+"'";
+
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que obtiene la URL almacenada en la BD
+	 * @param imagen: atributo que hace referencia al videojuego seleccionado
+	 * @return
+	 */
+	public static String obtenerURLJuego(String imagen) {
+		String query = "SELECT url FROM PRODUCTOS WHERE ruta='"+imagen+"'";
+		String url="";
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next())
+				url = rs.getString(1);
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return url;
+
+		
+	}
+
+	//PRUEBA MODIFICAR
+	//	public static void modificar1(String codigo, String talla, String nombre, String desc) {
+	//		String query="";
+	//		if(talla!=null) 
+	//			query = "UPDATE PRODUCTOS SET nombre='"+nombre+ "' WHERE codigo='"+codigo+"' AND talla='"+talla+"'";
+	//		else
+	//			query = "UPDATE PRODUCTOS SET nombre='"+nombre+ "' WHERE codigo='"+codigo+"'"; 
+	//		try {
+	//			stmt.executeUpdate(query);
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//		}
+	//	}
+
+	/**
+	 * Método que sirve para modificar los productos con peso
+	 * Como son las bicicletas y las palas
+	 * @param cod: atributo que hace referencia al codigo del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param precio: atributo que hace referencia al precio del producto
+	 * @param stock: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param ofer: atributo que hace referencia a la oferta del producto
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param color: atributo que hace referencia al color del producto
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param marca: atributo que hace referencia a la marca del producto
+	 * @param peso: atributo que hace referencia al stock del producto
+	 */
+	//Este método sirve para modificar aquellos productos que tienen peso como es el caso de las bicicletas y las palas de pádel
+	public static void modificarProductosConPeso(String cod, String nom, double precio, int stock, String desc, String ruta, String cat, String ofer, String talla, String color, String tipo, String marca, double peso) {
+		String query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock='" + stock + "' , descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat +
+				"' , oferta='" + ofer + "' , color='" + color + "' , tipo='" + tipo + "' , marca='" + marca + "' , peso=" + peso +" WHERE codigo='" + cod + "' AND talla='" + talla +"'";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que sirve para modificar los videojuegos
+	 * @param cod: atributo que hace referencia al código del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param precio: atributo que hace referencia al precio del producto
+	 * @param stock: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descipción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param ofer: atributo que hace referencia a la oferta del producto
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param plat: atributo que hace referencia a la plataforma del videojuego
+	 * @param url: atributo que hace referencia a la url del videojuego
+	 */
+	//Si no tiene url sirve para modificar aquellos juegos que no son online
+	//Por otro lado, si tiene url sirve para modificar productos gratuitos
+	public static void modificarVideojuegos(String cod, String nom, double precio, int stock, String desc, String ruta, String cat, String ofer, String tipo, String plat, String url) {
+		String query= "";
+		if(url!=null) {
+			query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock=" + stock + ", descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat + "' , oferta='" + ofer +
+					"' , tipo='" + tipo + "' , Plataforma='" + plat + "' , url='" + url + "' WHERE codigo='" + cod + "'";
+		}else {
+			query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock=" + stock + ", descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat + "' , oferta='" + ofer +
+					"' , tipo='" + tipo + "' , Plataforma='" + plat + "' WHERE codigo='" + cod + "'";
+		}
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que sirve para modificar productos con equipo
+	 * @param cod: atributo que hace referencia al código del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param precio: atributo que hace referencia al precio del producto
+	 * @param stock: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param ofer: atributo que hace referencia a la oferta del producto
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param color: atributo que hace referencia al color del producto
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param marca: atributo que hace referencia a la marca del producto
+	 * @param equipo: atributo que hace referencia al equipo del producto
+	 */
+	//Este método sirve para modificar las camisetas, pantalones y sudaderas tanto de fútbol como de baloncesto
+	//También sirve para modificar los maillots y los cascos de ciclismo.
+	public static void modificarProductosConEquipo(String cod, String nom, double precio, int stock, String desc, String ruta, String cat, String ofer, String talla, String color, String tipo, String marca, String equipo) {
+		String query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock=" + stock + " , descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat + "'  oferta='" + ofer +
+				"' , color='" + color + "' , tipo='" + tipo + "' , marca='" + marca + "' , equipo='" + equipo + "' WHERE codigo='" + cod + "' AND talla='" + talla + "'";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
+
+	/**
+	 * Método que sirve para modificaaar productos sin equipo y sin peso
+	 * @param cod: atributo que hace referencia al código del producto
+	 * @param nom: atributo que hace referencia al nombre del producto
+	 * @param precio: atributo que hace referencia al precio del producto
+	 * @param stock: atributo que hace referencia al stock del producto
+	 * @param desc: atributo que hace referencia a la descripción del producto
+	 * @param ruta: atributo que hace referencia a la ruta del producto
+	 * @param cat: atributo que hace referencia a la categoria del producto
+	 * @param ofer: atributo que hace referencia a la oferta del producto
+	 * @param talla: atributo que hace referencia a la talla del producto
+	 * @param color: atributo que hace referencia al color del producto
+	 * @param tipo: atributo que hace referencia al tipo del producto
+	 * @param marca: atributo que hace referencia a la marca del producto
+	 */
+	//Este método sirve para modificar los productos que no tienen ni equipo ni peso como por ejemplo los balones, protectores, pelotas, paleteros...
+	//También srive para modificar los productos como las playeras y las botas
+	public static void modificarProductosSinEquipoYPeso(String cod, String nom, double precio, int stock, String desc, String ruta, String cat, String ofer, String talla, String color, String tipo, String marca) {
+		String query = "";
+		if(talla!=null) {
+			query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock=" + stock + " , descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat + "' , oferta='" + ofer +
+					"' , color='" + color + "' , tipo='" + "' , marca='" + marca + "' WHERE codigo='" + cod + "' AND talla='" + talla + "'";
+		}else {
+			query = "UPDATE PRODUCTOS SET nombre='" + nom + "' , precio=" + precio + " , stock=" + stock + " , descripcion='" + desc + "' , ruta='" + ruta + "' , categoria='" + cat + "' , oferta='" + ofer +
+					"' , color='" + color + "' , tipo='" + "' , marca='" + marca + "' WHERE codigo='" + cod + "'";
+		}
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 
 }

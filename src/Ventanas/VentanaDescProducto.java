@@ -52,7 +52,7 @@ public class VentanaDescProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaDescProducto(String url, JFrame va, String cat, String nom, double precio, String tipo, String desc) {
+	public VentanaDescProducto(String nick, String url, JFrame va, String cat, String nom, double precio, String tipo, String desc, String cod) {
 		setResizable(false);
 		ventanaAnterior = va;
 		JFrame v=this;
@@ -75,9 +75,8 @@ public class VentanaDescProducto extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vp = new VentanaMenu(v);
+				VentanaMenu vp = new VentanaMenu(v, nick);
 				vp.setVisible(true);
 
 			}
@@ -90,7 +89,7 @@ public class VentanaDescProducto extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				v.dispose();
-				VentanaFactura vf = new VentanaFactura();
+				VentanaFactura vf = new VentanaFactura(nick);
 				vf.setVisible(true);
 				
 			}
@@ -138,8 +137,18 @@ public class VentanaDescProducto extends JFrame {
 
 
 
-		String [] cant = {"1", "2","3","4", "5","6","7", "8","9","10", "11"};
-		cbCantidad = new JComboBox(cant);
+		cbCantidad = new JComboBox<Integer>();
+		cbCantidad.addItem(new Integer(0));
+		cbCantidad.addItem(new Integer(1));
+		cbCantidad.addItem(new Integer(2));
+		cbCantidad.addItem(new Integer(3));
+		cbCantidad.addItem(new Integer(4));
+		cbCantidad.addItem(new Integer(5));
+		cbCantidad.addItem(new Integer(6));
+		cbCantidad.addItem(new Integer(7));
+		cbCantidad.addItem(new Integer(8));
+		cbCantidad.addItem(new Integer(9));
+		cbCantidad.addItem(new Integer(10));
 		cbCantidad.setBounds(337, 53, 75, 27);
 		panel.add(cbCantidad);
 

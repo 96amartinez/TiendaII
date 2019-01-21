@@ -8,6 +8,7 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -15,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -24,6 +27,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableStringConverter;
 
+import BaseDeDatos.BD;
 import Ventanas.VentanaLogin;
 import Ventanas.VentanaMenu;
 
@@ -33,6 +37,8 @@ import javax.swing.JComboBox;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -96,233 +102,7 @@ public class TablaAdminUsuarios extends JFrame {
 		table.setRowSorter(modeloOrdenado);
 		MiRender rr = new MiRender();
 		table.setDefaultRenderer(Object.class, rr);
-		//table.setDefaultRenderer (Object.class, new MiRender());
-
-		//		String []opciones = {"Todos los productos","Fútbol", "Pádel", "Baloncesto","Ciclismo", "Videojuegos","Camisetas", "Pantalones", "Botas", "Balones", "Sudaderas", "Guantes", "Bicicletas", "Cascos",
-		//				"Maillots", "Botellines", "Playeras", "Palas", "Pelotas", "Paleteros", "Protectores", "Nike", "PS4", "PS3", "XBOX", "Gratuitos"
-		//		};
-
-
-		//		JLabel lblMarca = new JLabel("Filtrar productos por marca");
-		//		lblMarca.setBounds(55,500,200,20);
-		//		getContentPane().add(lblMarca);
-		//		
-		//		String []opcMarca = {"Todos los productos", "Cannondale", "Trek", "Orbea", "Specialized", "Spiuk", "Limar", "Tacx" ,"Catlike", "Roger", "UCI", "Argon", "Pinarello", "BH", "Canyon"};
-		//
-		//		JComboBox cbmar = new JComboBox(opcMarca);
-		//		cbmar.setBounds(250,500,200,20);
-		//		getContentPane().add(cbmar);
-		//		cbmar.addActionListener(new ActionListener() {
-		//
-		//			@Override
-		//			public void actionPerformed(ActionEvent e) {
-		//				// TODO Auto-generated method stub
-		//				String itemSelec = (String)cbmar.getSelectedItem();
-		//				if("Todos los productos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Producto", 5));
-		//				}else if ("Cannondale".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Cannondale", 11));
-		//				} else if ("Trek".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Trek", 11));
-		//				} else if ("Orbea".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Orbea", 11));
-		//				} else if ("Specialized".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Specialized", 11));
-		//				} else if ("Spiuk".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Spiuk", 11));
-		//				} else if ("Limar".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Limar", 11));
-		//				} else if ("Tacx".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Tacx", 11));
-		//				} else if("Catlike".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Catlike", 11));
-		//				} else if("Roger".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Roger", 11));
-		//				}else if("UCI".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("UCI", 11));
-		//				}else if("Argon".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Argon", 11));
-		//				}else if("Pinarello".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Pinarello", 11));
-		//				}else if("BH".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("BH", 11));
-		//				}else if("Canyon".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Canyon", 11));
-		//				}else if("Pelotas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Pelotas", 11));
-		//				}	
-		//			}
-		//		});
-		//
-		//		
-		//		
-		//		JLabel lblEquipos= new JLabel("Filtrar productos por equipo");
-		//		lblEquipos.setBounds(55,440,200,20);
-		//		getContentPane().add(lblEquipos);
-		//		
-		//		String []opcEquipos= {"Todos los productos","Tinkoff Saxo", "Euskaltel Euskadi", "Euskadi Murias", "Astana", "Movistar", "Poza Bike Xtrem", "Sky", "Burgos BH", "Spurs", "Houston Rockets",
-		//				"Celtics", "Cleveland Cavaliers", "Los Angeles Lakers", "Chicago Bulls", "Golden State Warriors", "New Orleands Pelicans", "PSG", "Juventus", "Manchester City", "Leicester City", 
-		//				"Athletic Club", "Bayern Munich", "Chelsea", "Inter de Milán", "Liverpool", "Manchester United", "Arsenal", "Borussia Dortmund"};
-		//		
-		//		JComboBox cbeq = new JComboBox(opcEquipos);
-		//		cbeq.setBounds(250,440,200,20);
-		//		getContentPane().add(cbeq);
-		//		cbeq.addActionListener(new ActionListener() {
-		//
-		//			@Override
-		//			public void actionPerformed(ActionEvent e) {
-		//				// TODO Auto-generated method stub
-		//				String itemSelec = (String)cbeq.getSelectedItem();
-		//				if("Todos los productos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Producto", 5));
-		//				}else if ("Euskaltel Euskadi".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Euskaltel ", 12));
-		//				} else if ("Euskadi Murias".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Euskadi ", 12));
-		//				} else if ("Astana".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Astana", 12));
-		//				} else if ("Movistar".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Movistar", 12));
-		//				} else if ("Poza Bike Xtrem".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Poza ", 12));
-		//				} else if ("Sky".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Sky", 12));
-		//				} else if ("Burgos BH".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Burgos ", 12));
-		//				} else if("Spurs".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Spurs", 12));
-		//				} else if("Houston Rockets".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Houston ", 12));
-		//				}else if("Celtics".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Celtics", 12));
-		//				}else if("Cleveland Cavaliers".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Cleveland ", 12));
-		//				}else if("Los Angeles Lakers".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Los Angeles Lakers", 12));
-		//				}else if("Chicago Bulls".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Chicago ", 12));
-		//				}else if("Golden State Warriors".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Warriors", 12));
-		//				}else if("New Orleans Pelicans".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("New Orleans Pelicans", 12));
-		//				} else if ("Tinkoff Saxo".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Tinkoff ", 12));
-		//				} else if("PSG".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("PSG", 12));
-		//				} else if("Juventus".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Juventus ", 12));
-		//				}else if("Manchester City".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Manchester City", 12));
-		//				}else if("Leicester City".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Leicester City ", 12));
-		//				}else if("Athletic Club".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Athletic Club", 12));
-		//				}else if("Bayern Munich".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Bayern ", 12));
-		//				}else if("Chelsea".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Chelsea", 12));
-		//				}else if("Inter de Milán".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Inter", 12));
-		//				} else if ("Liverpool".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Liverpool ", 12));
-		//				} else if("Manchester United".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Manchester United", 12));
-		//				} else if("Arsenal".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Arsenal ", 12));
-		//				}else if("Borussia Dortmund".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Borussia Dortmund", 12));
-		//				
-		//				}	
-		//				
-		//			}
-		//		});
-		//
-		//
-		//		JLabel lbltip = new JLabel("Filtrar productos por tipo:");
-		//		lbltip.setBounds(55,560,200,20);
-		//		getContentPane().add(lbltip);
-		//		
-		//		String []opcTip = {"Todos los productos","Camisetas", "Pantalones", "Botas", "Playeras", "Balones", "Sudaderas", "Guantes", "Bicicletas", "Cascos", "Maillots", "Botellines", 
-		//				"Playeras", "Palas", "Paleteros", "Protectores", "Pelotas"}; 
-		//		
-		//		JComboBox cbtip = new JComboBox(opcTip);
-		//		cbtip.setBounds(250,560,200,20);
-		//		getContentPane().add(cbtip);
-		//		cbtip.addActionListener(new ActionListener() {
-		//
-		//			@Override
-		//			public void actionPerformed(ActionEvent e) {
-		//				// TODO Auto-generated method stub
-		//				String itemSelec = (String)cbtip.getSelectedItem();
-		//				if("Todos los productos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Producto", 5));
-		//				}else if ("Camisetas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Camisetas", 10));
-		//				} else if ("Pantalones".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Pantalones", 10));
-		//				} else if ("Botas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Botas", 10));
-		//				} else if ("Balones".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Balones", 10));
-		//				} else if ("Sudaderas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Sudaderas", 10));
-		//				} else if ("Guantes".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Guantes", 10));
-		//				} else if ("Cascos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Cascos", 10));
-		//				} else if("Maillots".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Maillots", 10));
-		//				} else if("Palas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Palas", 10));
-		//				}else if("Playeras".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Playeras", 10));
-		//				}else if("Bicicletas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Bicicletas", 10));
-		//				}else if("Botellines".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Botellines", 10));
-		//				}else if("Paleteros".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Paleteros", 10));
-		//				}else if("Protectores".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Protectores", 10));
-		//				}else if("Pelotas".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Pelotas", 10));
-		//				}	
-		//			}
-		//		});
-		//
-		//		JLabel lblcat = new JLabel("Filtrar productos por categoria:");
-		//		lblcat.setBounds(55,620,200,20);
-		//		getContentPane().add(lblcat);
-		//		
-		//		String []opcCat = {"Todos los productos", "Fútbol", "Baloncesto", "Pádel", "Ciclismo", "Videojuegos"};
-		//
-		//		JComboBox cb = new JComboBox(opcCat);
-		//		cb.setBounds(250,620,200,20);
-		//		getContentPane().add(cb);
-		//		cb.addActionListener(new ActionListener() {
-		//
-		//			@Override
-		//			public void actionPerformed(ActionEvent e) {
-		//				// TODO Auto-generated method stub
-		//				String itemSelec = (String)cb.getSelectedItem();
-		//				if("Todos los productos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Producto", 5));
-		//				}else if ("Fútbol".equals(itemSelec)){
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Fútbol", 6));
-		//				} else if ("Pádel".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Pádel", 6));
-		//				} else if ("Baloncesto".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Baloncesto", 6));
-		//				} else if ("Ciclismo".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Ciclismo", 6));
-		//				} else if ("Videojuegos".equals(itemSelec)) {
-		//					modeloOrdenado.setRowFilter(RowFilter.regexFilter("Videojuegos", 6));
-		//				}
-		//			}
-		//		});
-
-
-
+		
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -448,7 +228,7 @@ public class TablaAdminUsuarios extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String query = jtxtFiltro.getText().toLowerCase();
-				filterCodigo(query);
+				filterNick(query);
 			}
 		});
 		jtxtFiltro.setBounds(800,560,150,20);
@@ -480,7 +260,7 @@ public class TablaAdminUsuarios extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				jButtonAgregarActionPerformed(e);
+				AgregarFila(e);
 				
 			}
 		});
@@ -493,11 +273,43 @@ public class TablaAdminUsuarios extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				jButtonEliminarActionPerformed(e);
+				EliminarFila(e);
 			}
 		});
 		getContentPane().add(btnEliminar);
 
+		tableModel.addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getType() == TableModelEvent.UPDATE) {
+					String col = null;
+					if (e.getColumn()==0) {
+						col = "DNI";
+					}else if(e.getColumn() ==1) {
+						col = "nombre";
+					}else if(e.getColumn()==2) {
+						col = "apellido";
+					}else if(e.getColumn()==3) {
+						col = "nick";
+					}else if(e.getColumn()==4){
+						col = "contrasenia";
+					}
+					String query = "UPDATE USUARIO SET " + col + "='" + tableModel.getValueAt(e.getFirstRow(), e.getColumn())+ "' WHERE DNI='" + tableModel.getValueAt(e.getFirstRow(), 0) + "'";
+					try {
+						Statement stmt = VentanaLogin.bd.getSentencia();
+						stmt.executeUpdate(query);
+						JOptionPane.showMessageDialog(null, "Hubo cambio en la fila " + (e.getFirstRow() +1) + " de la columna " + (e.getColumn() +1));
+					}catch (SQLException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Error al actualizar");
+					}
+
+				}
+
+			}
+		});
 	}
 
 	private void meterColumnasTableModel(String[] columnas) {
@@ -506,34 +318,30 @@ public class TablaAdminUsuarios extends JFrame {
 		}
 	}
 
-	private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt){
-		DefaultTableModel temp = (DefaultTableModel) table.getModel();
-		Object nuevo[]= {temp.getRowCount()+1,"",""};
-		temp.addRow(nuevo);
+	private void AgregarFila(ActionEvent evt){
+		tableModel = (DefaultTableModel) table.getModel();
+		Object nuevo[]= {"","","","","",0,"",""};
+		tableModel.addRow(nuevo);
+		BD.insertarFila();
+
 	}
 
-	private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt){
+	private void EliminarFila(ActionEvent evt){
 		try
 		{
-			DefaultTableModel temp = (DefaultTableModel) table.getModel();
-			temp.removeRow(temp.getRowCount()-1);
+			tableModel= (DefaultTableModel) table.getModel();
+			//temp.removeRow(temp.getRowCount()-1);
+			tableModel.removeRow(table.getSelectedRow());
 		}
 		catch(ArrayIndexOutOfBoundsException e){;}
 	}
 	
-	private void filterCodigo(String query) {
-		modeloOrdenado = new TableRowSorter<TableModel>(tableModel);
-		table.setRowSorter(modeloOrdenado);
-		
-		modeloOrdenado.setRowFilter(RowFilter.regexFilter(query,0));
-
-	}
 	
-	private void filter(String query) {
+	private void filterNick(String query) {
 		modeloOrdenado = new TableRowSorter<TableModel>(tableModel);
 		table.setRowSorter(modeloOrdenado);
 		
-		modeloOrdenado.setRowFilter(RowFilter.regexFilter(query,0));
+		modeloOrdenado.setRowFilter(RowFilter.regexFilter(query,3));
 
 	}
 }

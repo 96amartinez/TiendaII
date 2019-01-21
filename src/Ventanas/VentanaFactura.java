@@ -21,7 +21,7 @@ public class VentanaFactura extends JFrame{
 	private JPanel contentPane;
 	private JFrame v = this;
 	
-	public VentanaFactura() {
+	public VentanaFactura(String nick) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100,100,750,350);
 		contentPane = new JPanel();
@@ -41,7 +41,7 @@ public class VentanaFactura extends JFrame{
 		btnRealizarPago.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				v.dispose();
-				VentanaPago vp = new VentanaPago();
+				VentanaPago vp = new VentanaPago(nick);
 				vp.setVisible(true);
 			}
 		});

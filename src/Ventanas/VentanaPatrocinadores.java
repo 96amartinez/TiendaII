@@ -50,7 +50,7 @@ public class VentanaPatrocinadores extends JFrame {
 	 * Create the frame.
 	 */
 	//Como maximizarla y que no se pueda modificar, ajustar el tamaño de las imagenes
-	public VentanaPatrocinadores(JFrame va) {
+	public VentanaPatrocinadores(JFrame va, String nick) {
 		JFrame v = this;
 		setExtendedState(MAXIMIZED_BOTH);
 		//v.setResizable(false);
@@ -72,9 +72,8 @@ public class VentanaPatrocinadores extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 			
@@ -93,37 +92,32 @@ public class VentanaPatrocinadores extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelCentro.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescripcionPatrocinadores vdp = new VentanaDescripcionPatrocinadores(url,v);
+				VentanaDescripcionPatrocinadores vdp = new VentanaDescripcionPatrocinadores(url,v, nick);
 				vdp.setVisible(true);
 				}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -144,7 +138,6 @@ public class VentanaPatrocinadores extends JFrame {
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return aRutas;

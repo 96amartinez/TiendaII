@@ -41,27 +41,12 @@ public class VentanaFutbol extends JFrame {
 	private JComboBox cbMarca;
 	private JComboBox cbEquipo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaFutbol frame = new VentanaFutbol();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	
 	/**
 	 * Create the frame.
 	 */
-	public VentanaFutbol() {
+	public VentanaFutbol(String nick) {
 		JFrame v = this;
 		setExtendedState(MAXIMIZED_BOTH);
 		//v.setResizable(false);
@@ -94,7 +79,6 @@ public class VentanaFutbol extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				rellenaComboTalla((String)cbTipo.getSelectedItem());
 				rellenaComboColor((String)cbTipo.getSelectedItem());
 				rellenaComboMarca((String)cbTipo.getSelectedItem());
@@ -130,7 +114,6 @@ public class VentanaFutbol extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				boolean seleccionado;
 				do {
 					seleccionado = true;
@@ -195,9 +178,8 @@ public class VentanaFutbol extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 			}
 			
@@ -214,37 +196,32 @@ public class VentanaFutbol extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent evento) {
-				// TODO Auto-generated method stub
 				Point p = evento.getPoint();
 				JLabel lblProducto = (JLabel)panelCentro.getComponentAt(p);
 				ImageIcon im = (ImageIcon)lblProducto.getIcon();
 				String url = im.getDescription();
 				v.dispose();
-				VentanaDescProducto vdp = new VentanaDescProducto(url,v, "Fútbol", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),BD.obtenerTipoProducto(url), BD.obtenerDescProducto(url));
+				VentanaDescProducto vdp = new VentanaDescProducto(nick,url,v, "Fútbol", BD.obtenerNombreProducto(url), BD.obtenerPrecioProducto(url),BD.obtenerTipoProducto(url), BD.obtenerDescProducto(url), BD.obtenerCodProducto(url));
 				vdp.setVisible(true);
 				}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -270,7 +247,6 @@ public class VentanaFutbol extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void rellenaComboEquipo() {
-		// TODO Auto-generated method stub
 		cbEquipo.addItem("");
 		cbEquipo.addItem("Athletic Club");
 		cbEquipo.addItem("Liverpool");
@@ -285,7 +261,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboMarca() {
-		// TODO Auto-generated method stub
 		cbMarca.addItem("");
 		cbMarca.addItem("Nike");
 		cbMarca.addItem("Adidas");
@@ -297,7 +272,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboColor() {
-		// TODO Auto-generated method stub
 		cbColor.addItem("");
 		cbColor.addItem("Amarillo");
 		cbColor.addItem("Azul");
@@ -310,7 +284,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTalla() {
-		// TODO Auto-generated method stub
 		cbTalla.addItem("");
 		cbTalla.addItem("35");
 		cbTalla.addItem("36");
@@ -334,7 +307,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTipo() {
-		// TODO Auto-generated method stub
 		cbTipo.addItem("");
 		cbTipo.addItem("Botas");
 		cbTipo.addItem("Camisetas");
@@ -347,7 +319,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboTalla(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbTalla.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboTalla();
@@ -400,7 +371,6 @@ public class VentanaFutbol extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void rellenaComboMarca(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbMarca.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboMarca();
@@ -422,7 +392,6 @@ public class VentanaFutbol extends JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void rellenaComboColor(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbColor.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboColor();
@@ -444,7 +413,6 @@ public class VentanaFutbol extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void rellenaComboEquipo(String selectedItem) {
-		// TODO Auto-generated method stub
 		cbEquipo.removeAllItems();
 		if(selectedItem.equals("")) {
 			rellenaComboEquipo();

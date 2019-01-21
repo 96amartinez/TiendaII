@@ -19,7 +19,7 @@ public class JUnit extends TestCase{
 
 	//TODO JUNIT PARA COMPROBAR QUE EL USUARIO EXISTE, HAY QUE HACER MÁS JUNITS
 	@Test
-	public void testExisteUsuario() {
+	public void testNickYContraseñaCorrectos() {
 	
 		BD.conectar();
 

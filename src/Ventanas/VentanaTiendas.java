@@ -26,7 +26,7 @@ public class VentanaTiendas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaTiendas(String ciudad, String url1, String url2, String texto) {
+	public VentanaTiendas(String ciudad, String url1, String url2, String texto, String nick) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 550);
@@ -52,7 +52,7 @@ public class VentanaTiendas extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.dispose();
-				VentanaMenu vm = new VentanaMenu(v);
+				VentanaMenu vm = new VentanaMenu(v, nick);
 				vm.setVisible(true);
 				
 			}
